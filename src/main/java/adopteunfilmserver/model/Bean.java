@@ -1,17 +1,36 @@
 package adopteunfilmserver.model;
 
+
 public class Bean
 {
-	
-	String name;
-	int length;
-	char[] chars;
 
-	public Bean(String name, int length, char[] chars)
+	int length;
+	String name;
+
+	public Bean(String name, int length)
 	{
 		this.name = name;
 		this.length = length;
-		this.chars = chars;
+	}
+
+	public int getLength()
+	{
+		return length;
+	}
+
+	public String getName()
+	{
+		return name;
+	}
+
+	public void setLength(int length)
+	{
+		this.length = length;
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
 	}
 
 }

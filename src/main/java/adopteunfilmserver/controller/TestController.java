@@ -16,7 +16,7 @@ public class TestController
 	@RequestMapping(value = "/test/{name}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody Bean testJson(@PathVariable String name)
 	{
-		return new Bean(name, name.length(), name.toCharArray());
+		return new Bean(name, name.length());
 	}
 
 }
