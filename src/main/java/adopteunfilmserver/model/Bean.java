@@ -1,6 +1,6 @@
 package adopteunfilmserver.model;
 
-
+/** Test Bean */
 public class Bean
 {
 
