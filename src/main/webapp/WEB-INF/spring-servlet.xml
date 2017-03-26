@@ -25,7 +25,22 @@
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="annotatedClasses">
 			<beans:list>
-				<beans:value>adopteunfilmserver.model.Bean</beans:value>
+				<beans:value>adopteunfilmserver.model.Actor</beans:value>
+				<beans:value>adopteunfilmserver.model.CustomerDesigner</beans:value>
+				<beans:value>adopteunfilmserver.model.Designer</beans:value>
+				<beans:value>adopteunfilmserver.model.Director</beans:value>
+				<beans:value>adopteunfilmserver.model.Follow</beans:value>
+				<beans:value>adopteunfilmserver.model.Genre</beans:value>
+				<beans:value>adopteunfilmserver.model.Keyword</beans:value>
+				<beans:value>adopteunfilmserver.model.Movie</beans:value>
+				<beans:value>adopteunfilmserver.model.Producer</beans:value>
+				<beans:value>adopteunfilmserver.model.ProductionCompany</beans:value>
+				<beans:value>adopteunfilmserver.model.ProductionDesigner</beans:value>
+				<beans:value>adopteunfilmserver.model.Rating</beans:value>
+				<beans:value>adopteunfilmserver.model.Recommendation</beans:value>
+				<beans:value>adopteunfilmserver.model.User</beans:value>
+				<beans:value>adopteunfilmserver.model.Wishlist</beans:value>
+				<beans:value>adopteunfilmserver.model.Writer</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">

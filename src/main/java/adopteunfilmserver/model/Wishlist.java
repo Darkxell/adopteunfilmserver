@@ -4,6 +4,7 @@ public class Wishlist
 {
 
 	int idMovie;
+
 	int idUser;
 
 	public Wishlist(int idUser, int idMovie)

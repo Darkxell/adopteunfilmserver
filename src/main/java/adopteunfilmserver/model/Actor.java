@@ -1,5 +1,6 @@
 package adopteunfilmserver.model;
 
+
 public class Actor
 {
 

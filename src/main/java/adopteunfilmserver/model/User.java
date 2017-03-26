@@ -1,10 +1,21 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "user")
 public class User
 {
 
+	@Id
+	@Column(name = "id_user")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+
+	@Column(name = "next_movie")
 	int nextSuggestion;
+
+	@Column(name = "pseudo")
 	String pseudo;
 
 	public User(int id, String pseudo, int nextSuggestion)

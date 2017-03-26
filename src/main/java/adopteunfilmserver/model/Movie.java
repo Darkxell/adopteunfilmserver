@@ -1,15 +1,30 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "movies")
 public class Movie
 {
 
+	@Id
+	@Column(name = "id_movie")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
-	int runningTime;
+
+	@Column(name = "runningtime")
+	double runningTime;
+
+	@Column(name = "movie")
 	String title;
+
+	@Column(name = "movie_type")
 	String type;
+
+	@Column(name = "years")
 	int year;
 
-	public Movie(int id, String title, int year, String type, int runningTime)
+	public Movie(int id, String title, int year, String type, double runningTime)
 	{
 		super();
 		this.id = id;
@@ -24,7 +39,7 @@ public class Movie
 		return id;
 	}
 
-	public int getRunningTime()
+	public double getRunningTime()
 	{
 		return runningTime;
 	}
@@ -49,7 +64,7 @@ public class Movie
 		this.id = id;
 	}
 
-	public void setRunningTime(int runningTime)
+	public void setRunningTime(double runningTime)
 	{
 		this.runningTime = runningTime;
 	}
