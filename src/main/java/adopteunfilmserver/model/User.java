@@ -18,12 +18,15 @@ public class User
 	@Column(name = "pseudo")
 	String pseudo;
 
-	public User(int id, String pseudo, int nextSuggestion)
+	public User()
+	{}
+
+	public User(String pseudo)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.pseudo = pseudo;
-		this.nextSuggestion = nextSuggestion;
+		this.nextSuggestion = -1;
 	}
 
 	public int getId()
