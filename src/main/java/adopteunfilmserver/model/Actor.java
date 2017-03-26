@@ -1,31 +1,37 @@
 package adopteunfilmserver.model;
 
-
 public class Actor
 {
 
-	String director;
+	int id;
 	int movie;
+	int person;
 	String role;
 	String roleInfo;
 
-	public Actor(int movie, String director, String role, String roleInfo)
+	public Actor(int id, int movie, int person, String role, String roleInfo)
 	{
 		super();
+		this.id = id;
 		this.movie = movie;
-		this.director = director;
+		this.person = person;
 		this.role = role;
 		this.roleInfo = roleInfo;
 	}
 
-	public String getDirector()
+	public int getId()
 	{
-		return director;
+		return id;
 	}
 
 	public int getMovie()
 	{
 		return movie;
+	}
+
+	public int getPerson()
+	{
+		return person;
 	}
 
 	public String getRole()
@@ -38,14 +44,19 @@ public class Actor
 		return roleInfo;
 	}
 
-	public void setDirector(String director)
+	public void setId(int id)
 	{
-		this.director = director;
+		this.id = id;
 	}
 
 	public void setMovie(int movie)
 	{
 		this.movie = movie;
+	}
+
+	public void setPerson(int person)
+	{
+		this.person = person;
 	}
 
 	public void setRole(String role)

@@ -3,16 +3,23 @@ package adopteunfilmserver.model;
 public class Producer
 {
 
+	int id;
 	String info;
 	int movie;
-	String producer;
+	int person;
 
-	public Producer(int movie, String producer, String info)
+	public Producer(int id, int movie, int person, String info)
 	{
 		super();
+		this.id = id;
 		this.movie = movie;
-		this.producer = producer;
+		this.person = person;
 		this.info = info;
+	}
+
+	public int getId()
+	{
+		return id;
 	}
 
 	public String getInfo()
@@ -25,9 +32,14 @@ public class Producer
 		return movie;
 	}
 
-	public String getProducer()
+	public int getPerson()
 	{
-		return producer;
+		return person;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public void setInfo(String info)
@@ -40,9 +52,9 @@ public class Producer
 		this.movie = movie;
 	}
 
-	public void setProducer(String producer)
+	public void setPerson(int person)
 	{
-		this.producer = producer;
+		this.person = person;
 	}
 
 }

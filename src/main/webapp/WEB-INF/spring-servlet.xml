@@ -26,15 +26,17 @@
 		<beans:property name="annotatedClasses">
 			<beans:list>
 				<beans:value>adopteunfilmserver.model.Actor</beans:value>
-				<beans:value>adopteunfilmserver.model.CustomerDesigner</beans:value>
+				<beans:value>adopteunfilmserver.model.Company</beans:value>
+				<beans:value>adopteunfilmserver.model.CostumeDesigner</beans:value>
 				<beans:value>adopteunfilmserver.model.Designer</beans:value>
 				<beans:value>adopteunfilmserver.model.Director</beans:value>
 				<beans:value>adopteunfilmserver.model.Follow</beans:value>
 				<beans:value>adopteunfilmserver.model.Genre</beans:value>
 				<beans:value>adopteunfilmserver.model.Keyword</beans:value>
+				<beans:value>adopteunfilmserver.model.Language</beans:value>
 				<beans:value>adopteunfilmserver.model.Movie</beans:value>
+				<beans:value>adopteunfilmserver.model.Person</beans:value>
 				<beans:value>adopteunfilmserver.model.Producer</beans:value>
-				<beans:value>adopteunfilmserver.model.ProductionCompany</beans:value>
 				<beans:value>adopteunfilmserver.model.ProductionDesigner</beans:value>
 				<beans:value>adopteunfilmserver.model.Rating</beans:value>
 				<beans:value>adopteunfilmserver.model.Recommendation</beans:value>

@@ -3,21 +3,23 @@ package adopteunfilmserver.model;
 public class Writer
 {
 
-	String director;
+	int id;
 	String info;
 	int movie;
+	int person;
 
-	public Writer(int movie, String director, String info)
+	public Writer(int id, int movie, int person, String info)
 	{
 		super();
+		this.id = id;
 		this.movie = movie;
-		this.director = director;
+		this.person = person;
 		this.info = info;
 	}
 
-	public String getDirector()
+	public int getId()
 	{
-		return director;
+		return id;
 	}
 
 	public String getInfo()
@@ -30,9 +32,14 @@ public class Writer
 		return movie;
 	}
 
-	public void setDirector(String director)
+	public int getPerson()
 	{
-		this.director = director;
+		return person;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public void setInfo(String info)
@@ -43,6 +50,11 @@ public class Writer
 	public void setMovie(int movie)
 	{
 		this.movie = movie;
+	}
+
+	public void setPerson(int person)
+	{
+		this.person = person;
 	}
 
 }

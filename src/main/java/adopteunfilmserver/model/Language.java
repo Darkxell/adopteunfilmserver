@@ -3,34 +3,34 @@ package adopteunfilmserver.model;
 public class Language
 {
 
-	String language;
-	int movie;
+	int id;
+	String name;
 
-	public Language(int movie, String language)
+	public Language(int id, String name)
 	{
 		super();
-		this.movie = movie;
-		this.language = language;
+		this.id = id;
+		this.name = name;
 	}
 
-	public String getLanguage()
+	public int getId()
 	{
-		return language;
+		return id;
 	}
 
-	public int getMovie()
+	public String getName()
 	{
-		return movie;
+		return name;
 	}
 
-	public void setLanguage(String language)
+	public void setId(int id)
 	{
-		this.language = language;
+		this.id = id;
 	}
 
-	public void setMovie(int movie)
+	public void setName(String name)
 	{
-		this.movie = movie;
+		this.name = name;
 	}
 
 }

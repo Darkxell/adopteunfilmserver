@@ -1,12 +1,12 @@
 package adopteunfilmserver.model;
 
-public class Genre
+public class Person
 {
 
 	int id;
 	String name;
 
-	public Genre(int id, String name)
+	public Person(int id, String name)
 	{
 		super();
 		this.id = id;

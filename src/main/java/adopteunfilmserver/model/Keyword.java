@@ -2,35 +2,35 @@ package adopteunfilmserver.model;
 
 public class Keyword
 {
-	
-	String keyword;
-	int movie;
 
-	public Keyword(int movie, String keyword)
+	int id;
+	String name;
+
+	public Keyword(int id, String name)
 	{
 		super();
-		this.movie = movie;
-		this.keyword = keyword;
+		this.id = id;
+		this.name = name;
 	}
 
-	public String getKeyword()
+	public int getId()
 	{
-		return keyword;
+		return id;
 	}
 
-	public int getMovie()
+	public String getName()
 	{
-		return movie;
+		return name;
 	}
 
-	public void setKeyword(String keyword)
+	public void setId(int id)
 	{
-		this.keyword = keyword;
+		this.id = id;
 	}
 
-	public void setMovie(int movie)
+	public void setName(String name)
 	{
-		this.movie = movie;
+		this.name = name;
 	}
 
 }

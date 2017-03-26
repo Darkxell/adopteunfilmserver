@@ -1,23 +1,25 @@
 package adopteunfilmserver.model;
 
-public class CustomerDesigner
+public class CostumeDesigner
 {
 
-	String customerDesigner;
+	int id;
 	String info;
 	int movie;
+	int person;
 
-	public CustomerDesigner(int movie, String customerDesigner, String info)
+	public CostumeDesigner(int id, int movie, int person, String info)
 	{
 		super();
+		this.id = id;
 		this.movie = movie;
-		this.customerDesigner = customerDesigner;
+		this.person = person;
 		this.info = info;
 	}
 
-	public String getCustomerDesigner()
+	public int getId()
 	{
-		return customerDesigner;
+		return id;
 	}
 
 	public String getInfo()
@@ -30,9 +32,14 @@ public class CustomerDesigner
 		return movie;
 	}
 
-	public void setCustomerDesigner(String customerDesigner)
+	public int getPerson()
 	{
-		this.customerDesigner = customerDesigner;
+		return person;
+	}
+
+	public void setId(int id)
+	{
+		this.id = id;
 	}
 
 	public void setInfo(String info)
@@ -43,6 +50,11 @@ public class CustomerDesigner
 	public void setMovie(int movie)
 	{
 		this.movie = movie;
+	}
+
+	public void setPerson(int person)
+	{
+		this.person = person;
 	}
 
 }

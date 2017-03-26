@@ -4,15 +4,17 @@ public class Director
 {
 
 	String alias;
-	String director;
+	int id;
 	String info;
 	int movie;
+	int person;
 
-	public Director(int movie, String director, String alias, String info)
+	public Director(int id, int movie, int person, String alias, String info)
 	{
 		super();
+		this.id = id;
 		this.movie = movie;
-		this.director = director;
+		this.person = person;
 		this.alias = alias;
 		this.info = info;
 	}
@@ -20,11 +22,6 @@ public class Director
 	public String getAlias()
 	{
 		return alias;
-	}
-
-	public String getDirector()
-	{
-		return director;
 	}
 
 	public String getInfo()
@@ -37,14 +34,14 @@ public class Director
 		return movie;
 	}
 
+	public int getPerson()
+	{
+		return person;
+	}
+
 	public void setAlias(String alias)
 	{
 		this.alias = alias;
-	}
-
-	public void setDirector(String director)
-	{
-		this.director = director;
 	}
 
 	public void setInfo(String info)
@@ -57,4 +54,8 @@ public class Director
 		this.movie = movie;
 	}
 
+	public void setPerson(int person)
+	{
+		this.person = person;
+	}
 }
