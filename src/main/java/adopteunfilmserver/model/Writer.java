@@ -1,25 +1,18 @@
 package adopteunfilmserver.model;
 
-public class Director
+public class Writer
 {
 
-	String alias;
 	String director;
 	String info;
 	int movie;
 
-	public Director(int movie, String director, String alias, String info)
+	public Writer(int movie, String director, String info)
 	{
 		super();
 		this.movie = movie;
 		this.director = director;
-		this.alias = alias;
 		this.info = info;
-	}
-
-	public String getAlias()
-	{
-		return alias;
 	}
 
 	public String getDirector()
@@ -35,11 +28,6 @@ public class Director
 	public int getMovie()
 	{
 		return movie;
-	}
-
-	public void setAlias(String alias)
-	{
-		this.alias = alias;
 	}
 
 	public void setDirector(String director)

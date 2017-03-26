@@ -27,6 +27,11 @@ public class Actor
 		return movie;
 	}
 
+	public String getRole()
+	{
+		return role;
+	}
+
 	public String getRoleInfo()
 	{
 		return roleInfo;
@@ -40,6 +45,11 @@ public class Actor
 	public void setMovie(int movie)
 	{
 		this.movie = movie;
+	}
+
+	public void setRole(String role)
+	{
+		this.role = role;
 	}
 
 	public void setRoleInfo(String roleInfo)
