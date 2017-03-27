@@ -2,57 +2,43 @@ package adopteunfilmserver.controller.service;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
+import org.hibernate.service.ServiceRegistryBuilder;
 import org.springframework.stereotype.Service;
 
-import adopteunfilmserver.controller.dao.UserDAO;
 import adopteunfilmserver.model.User;
 
+@SuppressWarnings("deprecation")
 @Service("userService")
-@Transactional
-public class UserService
-{
+public class UserService {
 
-	@Autowired
-	UserDAO userDao;
+	public User addUser(User user) {
+		Configuration con = new Configuration().configure().addAnnotatedClass(User.class);
+		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).build();
+		SessionFactory sf = con.buildSessionFactory(reg);
+		Session session = sf.openSession();
 
-	@Transactional
-	public User addUser(User user)
-	{
-		return this.userDao.add(user);
+		Transaction tx = session.beginTransaction();
+		session.save(user);
+		tx.commit();
+
+		return user;
 	}
 
-	@Transactional
-	public void deleteUser(int id)
-	{
-		User user = this.getUser(id);
-		if (user != null) this.userDao.delete(user);
-	}
+	@SuppressWarnings("unchecked")
+	public List<User> listUsers() {
+		Configuration con = new Configuration().configure().addAnnotatedClass(User.class);
+		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).build();
+		SessionFactory sf = con.buildSessionFactory(reg);
+		Session session = sf.openSession();
 
-	@Transactional
-	public void deleteUser(User user)
-	{
-		this.userDao.delete(user);
-	}
-
-	@Transactional
-	public User getUser(int id)
-	{
-		return this.userDao.get(id);
-	}
-
-	@Transactional
-	public List<User> listUsers()
-	{
-		return this.userDao.list("");
-	}
-
-	@Transactional
-	public void updateUser(User user)
-	{
-		this.userDao.update(user);
+		// Transaction tx = session.beginTransaction();
+		return session.createQuery("from user").list();
+		// tx.commit();
 	}
 
 }
