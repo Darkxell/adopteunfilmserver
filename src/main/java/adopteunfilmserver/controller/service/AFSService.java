@@ -1,6 +1,8 @@
 package adopteunfilmserver.controller.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -14,11 +16,15 @@ import org.hibernate.service.ServiceRegistryBuilder;
 public class AFSService<T>
 {
 
+	@SuppressWarnings("rawtypes")
+	private static final Set<Class> classes = new HashSet<Class>();
+
 	private Class<T> oClass;
 
 	public AFSService(Class<T> oClass)
 	{
 		this.oClass = oClass;
+		classes.add(this.oClass);
 	}
 
 	public T add(T object)
@@ -65,7 +71,9 @@ public class AFSService<T>
 	/** Provides easy access to the session. */
 	public Session session()
 	{
-		Configuration con = new Configuration().configure().addAnnotatedClass(this.oClass);
+		Configuration con = new Configuration().configure();
+		for (@SuppressWarnings("rawtypes") Class c : classes)
+			con.addAnnotatedClass(c);
 		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).build();
 		SessionFactory sf = con.buildSessionFactory(reg);
 		return sf.openSession();
