@@ -46,12 +46,12 @@ public class UserController
 	}
 
 	@RequestMapping(value = "/user/update/{id}/{next_movie}", method = RequestMethod.GET, headers = "Accept=application/json")
-	public @ResponseBody List<User> update(@PathVariable int id, @PathVariable int next_movie)
+	public @ResponseBody User update(@PathVariable int id, @PathVariable int next_movie)
 	{
 		User user = this.userService.get(id);
 		user.setNextSuggestion(next_movie);
 		this.userService.update(user);
-		return this.userService.list();
+		return user;
 	}
 
 }
