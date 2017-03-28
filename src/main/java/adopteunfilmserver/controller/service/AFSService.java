@@ -1,8 +1,6 @@
 package adopteunfilmserver.controller.service;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -10,13 +8,16 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
 
+import adopteunfilmserver.model.*;
+
 /** Each Service class should extend this class. */
 @SuppressWarnings("deprecation")
 public class AFSService<T>
 {
 
 	@SuppressWarnings("rawtypes")
-	private static final Set<Class> classes = new HashSet<Class>();
+	private static final Class[] classes =
+	{ Person.class, Company.class, Language.class, Genre.class, Keyword.class, Movie.class, User.class, Rating.class };
 	private static SessionFactory sf;
 
 	private Class<T> oClass;
@@ -24,7 +25,6 @@ public class AFSService<T>
 	public AFSService(Class<T> oClass)
 	{
 		this.oClass = oClass;
-		classes.add(this.oClass);
 	}
 
 	public T add(T object)

@@ -11,6 +11,14 @@ public class Movie
 {
 
 	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "movie_actor", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_person"))
+	Set<Person> actors;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "movie_productioncompany", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_company"))
+	Set<Company> companies;
+
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_genre"))
 	Set<Genre> genres;
 
@@ -53,6 +61,18 @@ public class Movie
 		this.genres = new HashSet<Genre>();
 		this.keywords = new HashSet<Keyword>();
 		this.languages = new HashSet<Language>();
+		this.actors = new HashSet<Person>();
+		this.companies = new HashSet<Company>();
+	}
+
+	public Set<Person> getActors()
+	{
+		return actors;
+	}
+
+	public Set<Company> getCompanies()
+	{
+		return companies;
 	}
 
 	public Set<Genre> getGenres()
@@ -93,6 +113,16 @@ public class Movie
 	public int getYear()
 	{
 		return year;
+	}
+
+	public void setActors(Set<Person> actors)
+	{
+		this.actors = actors;
+	}
+
+	public void setCompanies(Set<Company> companies)
+	{
+		this.companies = companies;
 	}
 
 	public void setGenres(Set<Genre> genres)
