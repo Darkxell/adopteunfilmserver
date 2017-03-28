@@ -1,19 +1,39 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "rating")
 public class Rating
 {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
-	int idMovie;
-	int idUser;
+
+	@ManyToOne(cascade =
+	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "id_movie")
+	Movie movie;
+
+	@Column(name = "note")
 	int note;
 
-	public Rating(int id, int idUser, int idMovie, int note)
+	@ManyToOne(cascade =
+	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "id_user")
+	User user;
+
+	public Rating()
+	{}
+
+	public Rating(User user, Movie movie, int note)
 	{
 		super();
-		this.id = id;
-		this.idUser = idUser;
-		this.idMovie = idMovie;
+		this.id = 0;
+		this.user = user;
+		this.movie = movie;
 		this.note = note;
 	}
 
@@ -22,14 +42,9 @@ public class Rating
 		return id;
 	}
 
-	public int getIdMovie()
+	public Movie getMovie()
 	{
-		return idMovie;
-	}
-
-	public int getIdUser()
-	{
-		return idUser;
+		return movie;
 	}
 
 	public int getNote()
@@ -37,24 +52,29 @@ public class Rating
 		return note;
 	}
 
+	public User getUser()
+	{
+		return user;
+	}
+
 	public void setId(int id)
 	{
 		this.id = id;
 	}
 
-	public void setIdMovie(int idMovie)
+	public void setMovie(Movie movie)
 	{
-		this.idMovie = idMovie;
-	}
-
-	public void setIdUser(int idUser)
-	{
-		this.idUser = idUser;
+		this.movie = movie;
 	}
 
 	public void setNote(int note)
 	{
 		this.note = note;
+	}
+
+	public void setUser(User user)
+	{
+		this.user = user;
 	}
 
 }

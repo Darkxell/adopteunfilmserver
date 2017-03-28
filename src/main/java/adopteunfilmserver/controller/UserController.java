@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.User;
 
@@ -18,6 +19,8 @@ public class UserController
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private MovieService movieService;
 
 	@RequestMapping(value = "/user/add/{name}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> add(@PathVariable String name)
@@ -49,7 +52,7 @@ public class UserController
 	public @ResponseBody User update(@PathVariable int id, @PathVariable int next_movie)
 	{
 		User user = this.userService.get(id);
-		user.setNextSuggestion(next_movie);
+		user.setNextSuggestion(this.movieService.get(next_movie));
 		this.userService.update(user);
 		return user;
 	}

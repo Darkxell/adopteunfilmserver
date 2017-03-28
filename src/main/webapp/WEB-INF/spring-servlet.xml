@@ -42,7 +42,6 @@
 				<beans:value>adopteunfilmserver.model.Rating</beans:value>
 				<beans:value>adopteunfilmserver.model.Recommendation</beans:value>
 				<beans:value>adopteunfilmserver.model.User</beans:value>
-				<beans:value>adopteunfilmserver.model.Wishlist</beans:value>
 				<beans:value>adopteunfilmserver.model.Writer</beans:value>
 			</beans:list>
 		</beans:property>

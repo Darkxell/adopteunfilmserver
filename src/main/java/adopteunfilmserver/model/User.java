@@ -1,5 +1,8 @@
 package adopteunfilmserver.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,11 +15,17 @@ public class User
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@Column(name = "next_movie")
-	int nextSuggestion;
+	@ManyToOne(cascade =
+	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@JoinColumn(name = "next_movie")
+	Movie nextSuggestion;
 
 	@Column(name = "pseudo")
 	String pseudo;
+
+	@OneToMany
+	@JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_movie"))
+	Set<Movie> wishlist;
 
 	public User()
 	{}
@@ -26,7 +35,8 @@ public class User
 		super();
 		this.id = 0;
 		this.pseudo = pseudo;
-		this.nextSuggestion = -1;
+		this.nextSuggestion = null;
+		this.wishlist = new HashSet<Movie>();
 	}
 
 	public int getId()
@@ -34,7 +44,7 @@ public class User
 		return id;
 	}
 
-	public int getNextSuggestion()
+	public Movie getNextSuggestion()
 	{
 		return nextSuggestion;
 	}
@@ -44,12 +54,17 @@ public class User
 		return pseudo;
 	}
 
+	public Set<Movie> getWishlist()
+	{
+		return wishlist;
+	}
+
 	public void setId(int id)
 	{
 		this.id = id;
 	}
 
-	public void setNextSuggestion(int nextSuggestion)
+	public void setNextSuggestion(Movie nextSuggestion)
 	{
 		this.nextSuggestion = nextSuggestion;
 	}
@@ -57,6 +72,11 @@ public class User
 	public void setPseudo(String pseudo)
 	{
 		this.pseudo = pseudo;
+	}
+
+	public void setWishlist(Set<Movie> wishlist)
+	{
+		this.wishlist = wishlist;
 	}
 
 }

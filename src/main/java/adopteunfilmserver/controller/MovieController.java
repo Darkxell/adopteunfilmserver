@@ -45,4 +45,10 @@ public class MovieController
 		return this.movieService.list();
 	}
 
+	@RequestMapping(value = "/movie/random", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody Movie random()
+	{
+		return this.movieService.random();
+	}
+
 }
