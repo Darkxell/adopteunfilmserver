@@ -15,15 +15,14 @@ public class User
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@ManyToOne(cascade =
-	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "next_movie")
 	Movie nextSuggestion;
 
 	@Column(name = "pseudo")
 	String pseudo;
 
-	@OneToMany
+	@OneToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "wishlist", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_movie"))
 	Set<Movie> wishlist;
 

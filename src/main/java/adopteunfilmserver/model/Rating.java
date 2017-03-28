@@ -12,16 +12,14 @@ public class Rating
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
-	@ManyToOne(cascade =
-	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_movie")
 	Movie movie;
 
 	@Column(name = "note")
 	int note;
 
-	@ManyToOne(cascade =
-	{ CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_user")
 	User user;
 

@@ -56,7 +56,16 @@
 
 	<context:component-scan base-package="adopteunfilmserver" />
 
-	<mvc:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters>
+			<beans:bean
+				class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<beans:property name="objectMapper" ref="jacksonObjectMapper" />
+			</beans:bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+
+	<beans:bean id="jacksonObjectMapper" class="adopteunfilmserver.controller.JsonMapper" />
 
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
