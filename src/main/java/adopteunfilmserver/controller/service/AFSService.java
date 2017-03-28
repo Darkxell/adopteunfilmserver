@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.service.ServiceRegistry;
 import org.hibernate.service.ServiceRegistryBuilder;
@@ -18,6 +17,7 @@ public class AFSService<T>
 
 	@SuppressWarnings("rawtypes")
 	private static final Set<Class> classes = new HashSet<Class>();
+	private static SessionFactory sf;
 
 	private Class<T> oClass;
 
@@ -31,11 +31,20 @@ public class AFSService<T>
 	{
 		Session session = this.session();
 
-		Transaction tx = session.beginTransaction();
 		session.save(object);
-		tx.commit();
+		session.getTransaction().commit();
 
 		return object;
+	}
+
+	private void createSessionFactory()
+	{
+		Configuration con = new Configuration().configure();
+		for (@SuppressWarnings("rawtypes")
+		Class c : classes)
+			con.addAnnotatedClass(c);
+		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).build();
+		sf = con.buildSessionFactory(reg);
 	}
 
 	public void delete(int id)
@@ -47,9 +56,8 @@ public class AFSService<T>
 	{
 		Session session = this.session();
 
-		Transaction tx = session.beginTransaction();
 		session.delete(object);
-		tx.commit();
+		session.getTransaction().commit();
 
 		return object;
 	}
@@ -71,21 +79,18 @@ public class AFSService<T>
 	/** Provides easy access to the session. */
 	public Session session()
 	{
-		Configuration con = new Configuration().configure();
-		for (@SuppressWarnings("rawtypes") Class c : classes)
-			con.addAnnotatedClass(c);
-		ServiceRegistry reg = new ServiceRegistryBuilder().applySettings(con.getProperties()).build();
-		SessionFactory sf = con.buildSessionFactory(reg);
-		return sf.openSession();
+		if (sf == null) createSessionFactory();
+		Session s = sf.getCurrentSession();
+		if (!s.getTransaction().isActive()) s.beginTransaction();
+		return s;
 	}
 
 	public T update(T object)
 	{
 		Session session = this.session();
 
-		Transaction tx = session.beginTransaction();
 		session.update(object);
-		tx.commit();
+		session.getTransaction().commit();
 
 		return object;
 	}
