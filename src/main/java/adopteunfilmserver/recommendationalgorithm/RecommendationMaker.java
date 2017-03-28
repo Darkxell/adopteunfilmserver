@@ -15,6 +15,12 @@ public class RecommendationMaker {
 	public RecommendationMaker(User user) {
 		// Hashmap containing the movies voted by the user.
 		HashMap<Movie, Integer> uservotes = null;// TODO : get them!
+
+		if (uservotes.size() < 5) {
+			randomFilm();
+			return;
+		}
+
 		// A list of ~50 films the user haven't rated yet.
 		ArrayList<Movie> randoms = null;// TODO : get them!
 		Movie best = null;
