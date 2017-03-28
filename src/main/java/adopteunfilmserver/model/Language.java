@@ -1,15 +1,27 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "language")
 public class Language
 {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+
+	@Column(name = "language")
 	String name;
 
-	public Language(int id, String name)
+	public Language()
+	{}
+
+	public Language(String name)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.name = name;
 	}
 

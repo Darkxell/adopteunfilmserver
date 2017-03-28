@@ -1,15 +1,27 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "person")
 public class Person
 {
 
+	@Id
+	@Column(name = "id_person")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+
+	@Column(name = "name")
 	String name;
 
-	public Person(int id, String name)
+	public Person()
+	{}
+
+	public Person(String name)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.name = name;
 	}
 
