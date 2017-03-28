@@ -37,7 +37,7 @@ public class UserService {
 		Session session = sf.openSession();
 
 		// Transaction tx = session.beginTransaction();
-		return session.createQuery("from user").list();
+		return session.createQuery("from User").list();
 		// tx.commit();
 	}
 
