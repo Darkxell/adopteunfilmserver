@@ -55,7 +55,7 @@
 		</mvc:message-converters>
 	</mvc:annotation-driven>
 
-	<beans:bean id="jacksonObjectMapper" class="adopteunfilmserver.controller.JsonMapper" />
+	<beans:bean id="jacksonObjectMapper" class="adopteunfilmserver.configuration.JsonMapper" />
 
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

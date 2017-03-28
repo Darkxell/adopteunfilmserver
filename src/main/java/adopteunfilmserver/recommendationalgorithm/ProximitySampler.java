@@ -22,8 +22,6 @@ class ProximitySampler {
 		movie1 = m1.getId();
 		movie2 = m2.getId();
 
-		// TODO : change "pseudocode" to code, HUH.
-
 		// KEYWORDS
 		for (Keyword k1 : m1.getKeywords())
 			for (Keyword k2 : m2.getKeywords())

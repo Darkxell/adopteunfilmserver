@@ -81,6 +81,7 @@ public class AFSService<T>
 	{
 		if (sf == null) createSessionFactory();
 		Session s = sf.getCurrentSession();
+
 		if (!s.getTransaction().isActive()) s.beginTransaction();
 		return s;
 	}

@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import adopteunfilmserver.controller.service.MovieService;
+import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.Movie;
+import adopteunfilmserver.model.User;
 
 @Controller
 public class MovieController
@@ -18,6 +20,8 @@ public class MovieController
 
 	@Autowired
 	private MovieService movieService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/movie/add/{name}/{type}/{year}/{running}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Movie> add(@PathVariable String name, @PathVariable int year, @PathVariable String type, @PathVariable double running)
@@ -49,6 +53,14 @@ public class MovieController
 	public @ResponseBody Movie random()
 	{
 		return this.movieService.random();
+	}
+
+	@RequestMapping(value = "/movie/recommend/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody Movie recommend(@PathVariable int user)
+	{
+		User u = this.userService.get(user);
+		this.userService.calculateNextRecommendation(u);
+		return u.getNextSuggestion() == null ? this.movieService.random() : u.getNextSuggestion();
 	}
 
 }

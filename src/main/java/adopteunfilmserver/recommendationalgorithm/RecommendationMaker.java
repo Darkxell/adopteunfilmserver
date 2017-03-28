@@ -2,8 +2,6 @@ package adopteunfilmserver.recommendationalgorithm;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.RatingService;
 import adopteunfilmserver.model.Movie;
@@ -13,21 +11,16 @@ import adopteunfilmserver.model.User;
 /** This object */
 public class RecommendationMaker {
 
-	@Autowired
-	MovieService movieService;
-	@Autowired
-	RatingService ratingService;
-
-	public RecommendationMaker(User user) {
-		List<Rating> uservotes = this.ratingService.list(user);
+	public RecommendationMaker(User user, RatingService ratings, MovieService movies) {
+		List<Rating> uservotes = ratings.list(user);
 
 		if (uservotes.size() < 5) {
-			this.output = this.movieService.random();
+			this.output = movies.random();
 			return;
 		}
 
 		// A list of ~50 films the user haven't rated yet.
-		List<Movie> randoms = this.movieService.random(50);
+		List<Movie> randoms = movies.random(50);
 		Movie best = null;
 		long bestmoviescore = 0;
 
