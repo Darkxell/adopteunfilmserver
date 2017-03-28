@@ -1,15 +1,27 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "keyword")
 public class Keyword
 {
 
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+
+	@Column(name = "keyword")
 	String name;
 
-	public Keyword(int id, String name)
+	public Keyword()
+	{}
+
+	public Keyword(String name)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.name = name;
 	}
 

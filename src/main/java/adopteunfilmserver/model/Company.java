@@ -1,20 +1,32 @@
 package adopteunfilmserver.model;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "company")
 public class Company
 {
 
+	@Column(name = "country")
 	String country;
+
+	@Id
+	@Column(name = "id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
-	String info;
+
+	@Column(name = "company")
 	String name;
 
-	public Company(int id, String name, String country, String info)
+	public Company()
+	{}
+
+	public Company(String name, String country)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.name = name;
 		this.country = country;
-		this.info = info;
 	}
 
 	public String getCountry()
@@ -25,11 +37,6 @@ public class Company
 	public int getId()
 	{
 		return id;
-	}
-
-	public String getInfo()
-	{
-		return info;
 	}
 
 	public String getName()
@@ -45,11 +52,6 @@ public class Company
 	public void setId(int id)
 	{
 		this.id = id;
-	}
-
-	public void setInfo(String info)
-	{
-		this.info = info;
 	}
 
 	public void setName(String name)

@@ -24,10 +24,13 @@ public class Movie
 	@Column(name = "years")
 	int year;
 
-	public Movie(int id, String title, int year, String type, double runningTime)
+	public Movie()
+	{}
+
+	public Movie(String title, int year, String type, double runningTime)
 	{
 		super();
-		this.id = id;
+		this.id = 0;
 		this.title = title;
 		this.year = year;
 		this.type = type;
