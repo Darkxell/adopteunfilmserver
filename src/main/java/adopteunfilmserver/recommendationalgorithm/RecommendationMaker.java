@@ -1,41 +1,44 @@
 package adopteunfilmserver.recommendationalgorithm;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import adopteunfilmserver.controller.service.MovieService;
+import adopteunfilmserver.controller.service.RatingService;
 import adopteunfilmserver.model.Movie;
+import adopteunfilmserver.model.Rating;
 import adopteunfilmserver.model.User;
 
 /** This object */
 public class RecommendationMaker {
 
-	@SuppressWarnings("rawtypes")
+	@Autowired
+	MovieService movieService;
+	@Autowired
+	RatingService ratingService;
+
 	public RecommendationMaker(User user) {
-		// Hashmap containing the movies voted by the user.
-		HashMap<Movie, Integer> uservotes = null;// TODO : get them!
+		List<Rating> uservotes = this.ratingService.list(user);
 
 		if (uservotes.size() < 5) {
-			randomFilm();
+			this.output = this.movieService.random();
 			return;
 		}
 
 		// A list of ~50 films the user haven't rated yet.
-		ArrayList<Movie> randoms = null;// TODO : get them!
+		List<Movie> randoms = this.movieService.random(50);
 		Movie best = null;
 		long bestmoviescore = 0;
 
 		for (int i = 0; i < randoms.size(); ++i) {
 			long score = 0;
-			Iterator it = uservotes.entrySet().iterator();
-			while (it.hasNext()) {
-				Map.Entry pair = (Map.Entry) it.next();
-				if ((int) pair.getValue() != 3) {
-					ProximitySampler sampler = new ProximitySampler((Movie) pair.getKey(), randoms.get(i));
-					score += sampler.proximity * voteToMultiplier((int) pair.getValue());
+			for (Rating r : uservotes)
+			{
+				if (r.getNote() != 3) {
+					ProximitySampler sampler = new ProximitySampler(r.getMovie(), randoms.get(i));
+					score += sampler.proximity * voteToMultiplier(r.getNote());
 				}
-				it.remove();
 			}
 			if (score > bestmoviescore) {
 				best = randoms.get(i);

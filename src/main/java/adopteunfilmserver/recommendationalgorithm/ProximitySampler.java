@@ -1,6 +1,6 @@
 package adopteunfilmserver.recommendationalgorithm;
 
-import adopteunfilmserver.model.Movie;
+import adopteunfilmserver.model.*;
 
 /** This class contains the proximity calculated between two movies. */
 class ProximitySampler {
@@ -25,22 +25,23 @@ class ProximitySampler {
 		// TODO : change "pseudocode" to code, HUH.
 
 		// KEYWORDS
-		for (int i = 0; movie1.keywords.length; ++i)
-			for (int j = i; movie2.keywords.length; ++j)
-				if (m1.keywords[i].equals(m2.keywords[j]))
+		for (Keyword k1 : m1.getKeywords())
+			for (Keyword k2 : m2.getKeywords())
+				if (k1.equals(k2))
 					calculating += ProximityRules.MATCHING_KEYWORD.score;
 		// GENRES
-		for (int i = 0; movie1.genres.length; ++i)
-			for (int j = i; movie2.genres.length; ++j)
-				if (m1.genres[i].equals(m2.genres[j]))
+		for (Genre g1 : m1.getGenres())
+			for (Genre g2 : m2.getGenres())
+				if (g1.equals(g2))
 					calculating += ProximityRules.MATCHING_GENRE.score;
 		// TYPE
 		if (m1.getType().equals(m2.getType()))
 			calculating += ProximityRules.MATCHING_GENRE.score;
-		// GENRES
-		for (int i = 0; movie1.actors.length; ++i)
-			for (int j = i; movie2.actors.length; ++j)
-				if (m1.actors[i].equals(m2.actors[j]))
+		
+		// ACTORS
+		for (Person a1 : m1.getActors())
+			for (Person a2 : m2.getActors())
+				if (a1.equals(a2))
 					calculating += ProximityRules.MATCHING_ACTOR.score;
 
 		// YEAR DIFFERENCE SCORE CALCULATION
@@ -48,9 +49,9 @@ class ProximitySampler {
 				- ((Math.abs(m1.getYear() - m2.getYear())) * ProximityRules.YEAR_DIFF_MULTIPLIER.score);
 
 		// LANGUAGE MATCHING SCORE TEST
-		for (int i = 0; movie1.languages.length; ++i)
-			for (int j = i; movie2.languages.length; ++j)
-				if (m1.languages[i].equals(m2.language[j]))
+		for (Language l1 : m1.getLanguages())
+			for (Language l2 : m2.getLanguages())
+				if (l1.equals(l2))
 					calculating += ProximityRules.MATCHING_LANGUAGE.score;
 		// PRODUCER MATCHING SCORE TEST
 		// DIRECTOR MATCHING SCORE TEST

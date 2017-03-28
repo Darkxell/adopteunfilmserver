@@ -17,10 +17,14 @@ public class MovieService extends AFSService<Movie>
 
 	public Movie random()
 	{
+		return this.random(1).get(0);
+	}
+
+	public List<Movie> random(int amount)
+	{
 		@SuppressWarnings("unchecked")
-		List<Movie> list = this.session().createQuery("from Movie order by RAND()").setMaxResults(1).list();
-		if (list.isEmpty()) return null;
-		return list.get(0);
+		List<Movie> list = this.session().createQuery("from Movie order by RAND()").setMaxResults(50).list();
+		return list;
 	}
 
 }
