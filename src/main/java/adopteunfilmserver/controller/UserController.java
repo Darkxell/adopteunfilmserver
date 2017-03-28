@@ -26,9 +26,31 @@ public class UserController
 		return this.userService.listUsers();
 	}
 
+	@RequestMapping(value = "/user/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody List<User> delete(@PathVariable int id)
+	{
+		this.userService.deleteUser(id);
+		return this.userService.listUsers();
+	}
+
+	@RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody User get(@PathVariable int id)
+	{
+		return this.userService.getUser(id);
+	}
+
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> list()
 	{
+		return this.userService.listUsers();
+	}
+
+	@RequestMapping(value = "/user/update/{id}/{next_movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody List<User> update(@PathVariable int id, @PathVariable int next_movie)
+	{
+		User user = this.userService.getUser(id);
+		user.setNextSuggestion(next_movie);
+		this.userService.updateUser(user);
 		return this.userService.listUsers();
 	}
 

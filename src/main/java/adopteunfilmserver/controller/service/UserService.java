@@ -28,6 +28,11 @@ public class UserService extends AFSService<User>
 		return user;
 	}
 
+	public void deleteUser(int id)
+	{
+		this.deleteUser(this.getUser(id));
+	}
+
 	public User deleteUser(User user)
 	{
 		Session session = this.session();
@@ -37,6 +42,14 @@ public class UserService extends AFSService<User>
 		tx.commit();
 
 		return user;
+	}
+
+	public User getUser(int id)
+	{
+		@SuppressWarnings("unchecked")
+		List<User> list = this.session().createQuery("from User where id='" + id + "'").list();
+		if (list.isEmpty()) return null;
+		return list.get(0);
 	}
 
 	@SuppressWarnings("unchecked")
