@@ -1,5 +1,8 @@
 package adopteunfilmserver.model;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -7,10 +10,22 @@ import javax.persistence.*;
 public class Movie
 {
 
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "movie_genre", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_genre"))
+	Set<Genre> genres;
+
 	@Id
 	@Column(name = "id_movie")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "movie_keywords", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_keyword"))
+	Set<Keyword> keywords;
+
+	@OneToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "movie_language", joinColumns = @JoinColumn(name = "id_movie"), inverseJoinColumns = @JoinColumn(name = "id_language"))
+	Set<Language> languages;
 
 	@Column(name = "runningtime")
 	double runningTime;
@@ -35,11 +50,29 @@ public class Movie
 		this.year = year;
 		this.type = type;
 		this.runningTime = runningTime;
+		this.genres = new HashSet<Genre>();
+		this.keywords = new HashSet<Keyword>();
+		this.languages = new HashSet<Language>();
+	}
+
+	public Set<Genre> getGenres()
+	{
+		return genres;
 	}
 
 	public int getId()
 	{
 		return id;
+	}
+
+	public Set<Keyword> getKeywords()
+	{
+		return keywords;
+	}
+
+	public Set<Language> getLanguages()
+	{
+		return languages;
 	}
 
 	public double getRunningTime()
@@ -62,9 +95,24 @@ public class Movie
 		return year;
 	}
 
+	public void setGenres(Set<Genre> genres)
+	{
+		this.genres = genres;
+	}
+
 	public void setId(int id)
 	{
 		this.id = id;
+	}
+
+	public void setKeywords(Set<Keyword> keywords)
+	{
+		this.keywords = keywords;
+	}
+
+	public void setLanguages(Set<Language> languages)
+	{
+		this.languages = languages;
 	}
 
 	public void setRunningTime(double runningTime)
