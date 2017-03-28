@@ -22,36 +22,36 @@ public class UserController
 	@RequestMapping(value = "/user/add/{name}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> add(@PathVariable String name)
 	{
-		this.userService.addUser(new User(name));
-		return this.userService.listUsers();
+		this.userService.add(new User(name));
+		return this.userService.list();
 	}
 
 	@RequestMapping(value = "/user/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> delete(@PathVariable int id)
 	{
-		this.userService.deleteUser(id);
-		return this.userService.listUsers();
+		this.userService.delete(id);
+		return this.userService.list();
 	}
 
 	@RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody User get(@PathVariable int id)
 	{
-		return this.userService.getUser(id);
+		return this.userService.get(id);
 	}
 
 	@RequestMapping(value = "/user/list", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> list()
 	{
-		return this.userService.listUsers();
+		return this.userService.list();
 	}
 
 	@RequestMapping(value = "/user/update/{id}/{next_movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> update(@PathVariable int id, @PathVariable int next_movie)
 	{
-		User user = this.userService.getUser(id);
+		User user = this.userService.get(id);
 		user.setNextSuggestion(next_movie);
-		this.userService.updateUser(user);
-		return this.userService.listUsers();
+		this.userService.update(user);
+		return this.userService.list();
 	}
 
 }
