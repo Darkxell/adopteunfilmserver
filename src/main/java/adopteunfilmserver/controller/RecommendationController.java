@@ -15,7 +15,7 @@ import adopteunfilmserver.model.Movie;
 import adopteunfilmserver.model.User;
 
 @Controller
-public class WishlistController
+public class RecommendationController
 {
 
 	@Autowired
@@ -23,45 +23,45 @@ public class WishlistController
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/wishlist/add/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/user/shared/add/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody User add(@PathVariable int user, @PathVariable int movie)
 	{
 		User u = this.userService.get(user);
-		u.getWishlist().add(this.movieService.get(movie));
+		u.getRecommended().add(this.movieService.get(movie));
 		this.userService.update(u);
 		return u;
 	}
 
-	@RequestMapping(value = "/wishlist/delete/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/user/shared/delete/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody User delete(@PathVariable int user, @PathVariable int movie)
 	{
 		User u = this.userService.get(user);
-		u.getWishlist().remove(this.movieService.get(movie));
+		u.getRecommended().remove(this.movieService.get(movie));
 		this.userService.update(u);
 		return u;
 	}
 
-	@RequestMapping(value = "/wishlist/list/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/user/shared/list/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody Set<Movie> get(@PathVariable int user)
 	{
 		User u = this.userService.get(user);
-		return u.getWishlist();
+		return u.getRecommended();
 	}
 
-	@RequestMapping(value = "/wishlist/update/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/user/share/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody void update(@PathVariable int user, @PathVariable int movie)
 	{
 		User u = this.userService.get(user);
 		boolean add = true;
-		for (Movie m : u.getWishlist())
+		for (Movie m : u.getRecommended())
 			if (m.getId() == movie)
 			{
 				add = false;
 				break;
 			}
 
-		if (add) u.getWishlist().add(this.movieService.get(movie));
-		else u.getWishlist().remove(this.movieService.get(movie));
+		if (add) u.getRecommended().add(this.movieService.get(movie));
+		else u.getRecommended().remove(this.movieService.get(movie));
 
 		this.userService.update(u);
 	}

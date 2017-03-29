@@ -44,4 +44,22 @@ public class FollowController
 		return u.getFollowing();
 	}
 
+	@RequestMapping(value = "/user/follow/{user}/{followed}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody void update(@PathVariable int user, @PathVariable int followed)
+	{
+		User u = this.userService.get(user);
+		boolean add = true;
+		for (User f : u.getFollowing())
+			if (f.getId() == followed)
+			{
+				add = false;
+				break;
+			}
+
+		if (add) u.getFollowing().add(this.userService.get(followed));
+		else u.getFollowing().remove(this.userService.get(followed));
+
+		this.userService.update(u);
+	}
+
 }

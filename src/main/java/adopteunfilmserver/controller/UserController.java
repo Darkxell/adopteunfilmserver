@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.UserService;
-import adopteunfilmserver.model.Movie;
 import adopteunfilmserver.model.User;
 
 @Controller

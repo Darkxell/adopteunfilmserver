@@ -24,7 +24,9 @@ public class UserService extends AFSService<User>
 	// @Async
 	public void calculateNextRecommendation(User u)
 	{
-		// TODO manage next AND current
+		if (u.getNextSuggestion() == null) u.setNextSuggestion(this.movieService.random());
+		u.setCurrentSuggestion(u.getNextSuggestion());
+		
 		// TODO manage recommendations
 		RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 		u.setNextSuggestion(rm.getOutput());

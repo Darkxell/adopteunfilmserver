@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import adopteunfilmserver.controller.service.MovieService;
+import adopteunfilmserver.controller.service.RatingService;
 import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.Movie;
+import adopteunfilmserver.model.Rating;
 import adopteunfilmserver.model.User;
 
 @Controller
@@ -22,6 +24,8 @@ public class MovieController
 	private MovieService movieService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private RatingService ratingService;
 
 	@RequestMapping(value = "/movie/add/{name}/{type}/{year}/{running}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Movie> add(@PathVariable String name, @PathVariable int year, @PathVariable String type, @PathVariable double running)
@@ -55,11 +59,12 @@ public class MovieController
 		return this.movieService.random();
 	}
 
-	@RequestMapping(value = "/movie/recommend/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/user/recommend/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody Movie recommend(@PathVariable int user)
 	{
 		User u = this.userService.get(user);
-		if (u.getNextSuggestion() == null) this.userService.calculateNextRecommendation(u);
+		if (u.getNextSuggestion() == null || u.getNextSuggestion() == null) this.userService.calculateNextRecommendation(u);
+		u.getCurrentSuggestion().getId(); // To load suggestion (it's lazy fetched)
 		return u.getCurrentSuggestion();
 	}
 
@@ -67,6 +72,16 @@ public class MovieController
 	public @ResponseBody List<Movie> search(@PathVariable String param)
 	{
 		return this.movieService.search(param);
+	}
+
+	@RequestMapping(value = "/vote/{user}/{note}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody Movie vote(@PathVariable int user, @PathVariable int note)
+	{
+		User u = this.userService.get(user);
+		this.ratingService.add(new Rating(u, u.getCurrentSuggestion(), note));
+		this.userService.calculateNextRecommendation(u);
+		u.getCurrentSuggestion().getId(); // To load suggestion (it's lazy fetched)
+		return u.getCurrentSuggestion();
 	}
 
 }
