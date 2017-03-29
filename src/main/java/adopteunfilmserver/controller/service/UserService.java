@@ -24,9 +24,7 @@ public class UserService extends AFSService<User>
 	{
 		RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 		u.setNextSuggestion(rm.getOutput());
-		System.out.println("updating...");
 		this.update(u); // TODO Make Asynchronous
-		System.out.println("database updated");
 	}
 
 }
