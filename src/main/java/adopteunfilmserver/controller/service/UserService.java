@@ -1,7 +1,6 @@
 package adopteunfilmserver.controller.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import adopteunfilmserver.model.User;
@@ -20,13 +19,13 @@ public class UserService extends AFSService<User>
 		super(User.class);
 	}
 
-	@Async
+	// @Async
 	public void calculateNextRecommendation(User u)
 	{
 		RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 		u.setNextSuggestion(rm.getOutput());
 		System.out.println("updating...");
-		this.update(u);
+		this.update(u); // TODO Make Asynchronous
 		System.out.println("database updated");
 	}
 

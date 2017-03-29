@@ -96,6 +96,11 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.datatype</groupId>
+			<artifactId>jackson-datatype-hibernate4</artifactId>
+			<version>2.5.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>adopteunfilmserver</finalName>
