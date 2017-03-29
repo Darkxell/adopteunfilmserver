@@ -27,4 +27,11 @@ public class MovieService extends AFSService<Movie>
 		return list;
 	}
 
+	public List<Movie> search(String param)
+	{
+		@SuppressWarnings("unchecked")
+		List<Movie> list = this.session().createQuery("from Movie where title like '%" + param + "%'").setMaxResults(50).list();
+		return list;
+	}
+
 }

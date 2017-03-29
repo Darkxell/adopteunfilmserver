@@ -59,8 +59,14 @@ public class MovieController
 	public @ResponseBody Movie recommend(@PathVariable int user)
 	{
 		User u = this.userService.get(user);
-		this.userService.calculateNextRecommendation(u);
-		return u.getNextSuggestion() == null ? this.movieService.random() : u.getNextSuggestion();
+		if (u.getNextSuggestion() == null) this.userService.calculateNextRecommendation(u);
+		return u.getCurrentSuggestion();
+	}
+
+	@RequestMapping(value = "/movie/search/{param}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody List<Movie> search(@PathVariable String param)
+	{
+		return this.movieService.search(param);
 	}
 
 }

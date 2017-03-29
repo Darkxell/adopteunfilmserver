@@ -1,5 +1,7 @@
 package adopteunfilmserver.controller;
 
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.UserService;
+import adopteunfilmserver.model.Movie;
 import adopteunfilmserver.model.User;
 
 @Controller
@@ -20,7 +23,7 @@ public class WishlistController
 	@Autowired
 	private UserService userService;
 
-	@RequestMapping(value = "/user/wishlist/add/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/wishlist/add/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody User add(@PathVariable int user, @PathVariable int movie)
 	{
 		User u = this.userService.get(user);
@@ -29,13 +32,20 @@ public class WishlistController
 		return u;
 	}
 
-	@RequestMapping(value = "/user/wishlist/delete/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
+	@RequestMapping(value = "/wishlist/delete/{user}/{movie}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody User delete(@PathVariable int user, @PathVariable int movie)
 	{
 		User u = this.userService.get(user);
 		u.getWishlist().remove(this.movieService.get(movie));
 		this.userService.update(u);
 		return u;
+	}
+
+	@RequestMapping(value = "/wishlist/list/{user}", method = RequestMethod.GET, headers = "Accept=application/json")
+	public @ResponseBody Set<Movie> get(@PathVariable int user)
+	{
+		User u = this.userService.get(user);
+		return u.getWishlist();
 	}
 
 }
