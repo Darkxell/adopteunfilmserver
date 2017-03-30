@@ -68,7 +68,6 @@ public class AFSService<T>
 	{
 		@SuppressWarnings("unchecked")
 		List<T> list = this.session().createQuery("from " + this.oClass.getName() + " where id='" + id + "'").list();
-		if (this.session().isOpen()) this.session().close();
 		if (list.isEmpty()) return null;
 		return list.get(0);
 	}
@@ -77,7 +76,6 @@ public class AFSService<T>
 	public List<T> list()
 	{
 		List<T> list = this.session().createQuery("from " + this.oClass.getName()).list();
-		if (this.session().isOpen()) this.session().close();
 		return list;
 	}
 

@@ -24,7 +24,6 @@ public class MovieService extends AFSService<Movie>
 	{
 		@SuppressWarnings("unchecked")
 		List<Movie> list = this.session().createQuery("from Movie order by RAND()").setMaxResults(50).list();
-		if (this.session().isOpen()) this.session().close();
 		return list;
 	}
 
@@ -32,7 +31,6 @@ public class MovieService extends AFSService<Movie>
 	{
 		@SuppressWarnings("unchecked")
 		List<Movie> list = this.session().createQuery("from Movie where title like '%" + param + "%'").setMaxResults(50).list();
-		if (this.session().isOpen()) this.session().close();
 		return list;
 	}
 

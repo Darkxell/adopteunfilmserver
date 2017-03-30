@@ -85,6 +85,7 @@ public class MovieController
 	public @ResponseBody Movie vote(@PathVariable int user, @PathVariable int note)
 	{
 		User u = this.userService.get(user);
+		Hibernate.initialize(u.getCurrentSuggestion());
 		this.ratingService.add(new Rating(u, u.getCurrentSuggestion(), note));
 		this.userService.calculateNextRecommendation(u);
 		return u.getCurrentSuggestion();
