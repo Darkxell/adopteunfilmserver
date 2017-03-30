@@ -12,12 +12,14 @@ public class Rating
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	int id;
 
+	@ManyToOne
 	@JoinColumn(name = "id_movie")
 	Movie movie;
 
 	@Column(name = "note")
 	int note;
 
+	@ManyToOne
 	@JoinColumn(name = "id_user")
 	User user;
 

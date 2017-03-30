@@ -22,6 +22,7 @@ public class AFSService<T>
 
 	public static void closeSession()
 	{
+		sf.getCurrentSession().getTransaction().commit();
 		if (sf.getCurrentSession().isOpen()) sf.getCurrentSession().close();
 	}
 
@@ -37,7 +38,6 @@ public class AFSService<T>
 		Session session = this.session();
 
 		session.save(object);
-		session.getTransaction().commit();
 
 		return object;
 	}
@@ -62,7 +62,6 @@ public class AFSService<T>
 		Session session = this.session();
 
 		session.delete(object);
-		session.getTransaction().commit();
 
 		return object;
 	}
@@ -97,7 +96,6 @@ public class AFSService<T>
 		Session session = this.session();
 
 		session.update(object);
-		session.getTransaction().commit();
 
 		return object;
 	}

@@ -92,9 +92,11 @@ public class MovieController
 	{
 		User u = this.userService.get(user);
 		Hibernate.initialize(u.getCurrentSuggestion());
+		Hibernate.initialize(u.getNextSuggestion());
 		this.ratingService.add(new Rating(u, u.getCurrentSuggestion(), note));
+		u.setCurrentSuggestion(u.getNextSuggestion());
 		this.userService.calculateNextRecommendation(u);
-		AFSService.closeSession();
+		AFSService.closeSession(); //TODO move this to end of calculation
 		return u.getCurrentSuggestion();
 	}
 

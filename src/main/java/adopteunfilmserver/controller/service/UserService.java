@@ -3,7 +3,6 @@ package adopteunfilmserver.controller.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,21 +26,19 @@ public class UserService extends AFSService<User>
 	// @Async
 	public void calculateNextRecommendation(User u)
 	{
-		Hibernate.initialize(u.getNextSuggestion());
-		u.setCurrentSuggestion(u.getNextSuggestion());
-
 		List<Movie> recommended = new ArrayList<Movie>();
 		for (User follow : u.getFollowing())
 			recommended.addAll(follow.getRecommended());
 
 		recommended.removeAll(this.ratingService.getRatedMovies(u));
+		recommended.remove(u.getCurrentSuggestion());
 		if (!recommended.isEmpty()) u.setNextSuggestion(recommended.get(0));
 		else
 		{
 			RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 			u.setNextSuggestion(rm.getOutput());
 		}
-		this.update(u); // TODO Make Asynchronous
+		this.update(u);
 	}
 
 	public User get(String name)
