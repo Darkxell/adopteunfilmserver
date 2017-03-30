@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.KeywordService;
 import adopteunfilmserver.model.Keyword;
 
@@ -23,14 +24,18 @@ public class KeywordController
 	public @ResponseBody List<Keyword> add(@PathVariable String name)
 	{
 		this.keywordService.add(new Keyword(name));
-		return this.keywordService.list();
+		List<Keyword> keywords = this.keywordService.list();
+		AFSService.closeSession();
+		return keywords;
 	}
 
 	@RequestMapping(value = "/keyword/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Keyword> delete(@PathVariable int id)
 	{
 		this.keywordService.delete(id);
-		return this.keywordService.list();
+		List<Keyword> keywords = this.keywordService.list();
+		AFSService.closeSession();
+		return keywords;
 	}
 
 	@RequestMapping(value = "/keyword/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -51,6 +56,7 @@ public class KeywordController
 		Keyword keyword = this.keywordService.get(id);
 		keyword.setName(name);
 		this.keywordService.update(keyword);
+		AFSService.closeSession();
 		return keyword;
 	}
 

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.RatingService;
 import adopteunfilmserver.controller.service.UserService;
@@ -32,14 +33,18 @@ public class MovieController
 	public @ResponseBody List<Movie> add(@PathVariable String name, @PathVariable int year, @PathVariable String type, @PathVariable double running)
 	{
 		this.movieService.add(new Movie(name, year, type, running));
-		return this.movieService.list();
+		List<Movie> movies = this.movieService.list();
+		AFSService.closeSession();
+		return movies;
 	}
 
 	@RequestMapping(value = "/movie/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Movie> delete(@PathVariable int id)
 	{
 		this.movieService.delete(id);
-		return this.movieService.list();
+		List<Movie> movies = this.movieService.list();
+		AFSService.closeSession();
+		return movies;
 	}
 
 	@RequestMapping(value = "/movie/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -66,12 +71,13 @@ public class MovieController
 		User u = this.userService.get(user);
 		Hibernate.initialize(u.getNextSuggestion());
 		Hibernate.initialize(u.getCurrentSuggestion());
-		if (u.getCurrentSuggestion() == null||u.getNextSuggestion() == null)
+		if (u.getCurrentSuggestion() == null || u.getNextSuggestion() == null)
 		{
 			if (u.getCurrentSuggestion() == null) u.setCurrentSuggestion(this.movieService.random());
 			if (u.getNextSuggestion() == null) u.setNextSuggestion(this.movieService.random());
 			this.userService.update(u);
 		}
+		AFSService.closeSession();
 		return u.getCurrentSuggestion();
 	}
 
@@ -88,6 +94,7 @@ public class MovieController
 		Hibernate.initialize(u.getCurrentSuggestion());
 		this.ratingService.add(new Rating(u, u.getCurrentSuggestion(), note));
 		this.userService.calculateNextRecommendation(u);
+		AFSService.closeSession();
 		return u.getCurrentSuggestion();
 	}
 

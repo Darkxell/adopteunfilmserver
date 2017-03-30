@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.GenreService;
 import adopteunfilmserver.model.Genre;
 
@@ -23,14 +24,18 @@ public class GenreController
 	public @ResponseBody List<Genre> add(@PathVariable String name)
 	{
 		this.genreService.add(new Genre(name));
-		return this.genreService.list();
+		List<Genre> genres = this.genreService.list();
+		AFSService.closeSession();
+		return genres;
 	}
 
 	@RequestMapping(value = "/genre/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Genre> delete(@PathVariable int id)
 	{
 		this.genreService.delete(id);
-		return this.genreService.list();
+		List<Genre> genres = this.genreService.list();
+		AFSService.closeSession();
+		return genres;
 	}
 
 	@RequestMapping(value = "/genre/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -51,6 +56,7 @@ public class GenreController
 		Genre genre = this.genreService.get(id);
 		genre.setName(name);
 		this.genreService.update(genre);
+		AFSService.closeSession();
 		return genre;
 	}
 

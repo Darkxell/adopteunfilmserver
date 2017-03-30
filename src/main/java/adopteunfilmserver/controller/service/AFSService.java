@@ -20,6 +20,11 @@ public class AFSService<T>
 	{ Person.class, Company.class, Language.class, Genre.class, Keyword.class, Movie.class, User.class, Rating.class };
 	private static SessionFactory sf;
 
+	public static void closeSession()
+	{
+		if (sf.getCurrentSession().isOpen()) sf.getCurrentSession().close();
+	}
+
 	private Class<T> oClass;
 
 	public AFSService(Class<T> oClass)
@@ -33,7 +38,6 @@ public class AFSService<T>
 
 		session.save(object);
 		session.getTransaction().commit();
-		if (session.isOpen()) session.close();
 
 		return object;
 	}
@@ -59,7 +63,6 @@ public class AFSService<T>
 
 		session.delete(object);
 		session.getTransaction().commit();
-		if (session.isOpen()) session.close();
 
 		return object;
 	}
@@ -95,7 +98,6 @@ public class AFSService<T>
 
 		session.update(object);
 		session.getTransaction().commit();
-		if (session.isOpen()) session.close();
 
 		return object;
 	}

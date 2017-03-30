@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.RatingService;
 import adopteunfilmserver.controller.service.UserService;
@@ -29,14 +30,18 @@ public class RatingController
 	public @ResponseBody List<Rating> add(@PathVariable int user, @PathVariable int movie, @PathVariable int note)
 	{
 		this.ratingService.add(new Rating(this.userService.get(user), this.movieService.get(movie), note));
-		return this.ratingService.list();
+		List<Rating> ratings = this.ratingService.list();
+		AFSService.closeSession();
+		return ratings;
 	}
 
 	@RequestMapping(value = "/rating/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Rating> delete(@PathVariable int id)
 	{
 		this.ratingService.delete(id);
-		return this.ratingService.list();
+		List<Rating> ratings = this.ratingService.list();
+		AFSService.closeSession();
+		return ratings;
 	}
 
 	@RequestMapping(value = "/rating/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -57,6 +62,7 @@ public class RatingController
 		Rating rating = this.ratingService.get(id);
 		rating.setNote(note);
 		this.ratingService.update(rating);
+		AFSService.closeSession();
 		return rating;
 	}
 

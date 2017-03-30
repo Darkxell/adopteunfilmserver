@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.User;
 
@@ -25,6 +26,7 @@ public class FollowController
 		User u = this.userService.get(user);
 		u.getFollowing().add(this.userService.get(followed));
 		this.userService.update(u);
+		AFSService.closeSession();
 		return u;
 	}
 
@@ -34,6 +36,7 @@ public class FollowController
 		User u = this.userService.get(user);
 		u.getFollowing().remove(this.userService.get(followed));
 		this.userService.update(u);
+		AFSService.closeSession();
 		return u;
 	}
 
@@ -60,6 +63,7 @@ public class FollowController
 		else u.getFollowing().remove(this.userService.get(followed));
 
 		this.userService.update(u);
+		AFSService.closeSession();
 	}
 
 }

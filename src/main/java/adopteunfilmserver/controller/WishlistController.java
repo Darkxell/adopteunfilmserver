@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.Movie;
@@ -29,6 +30,7 @@ public class WishlistController
 		User u = this.userService.get(user);
 		u.getWishlist().add(this.movieService.get(movie));
 		this.userService.update(u);
+		AFSService.closeSession();
 		return u;
 	}
 
@@ -38,6 +40,7 @@ public class WishlistController
 		User u = this.userService.get(user);
 		u.getWishlist().remove(this.movieService.get(movie));
 		this.userService.update(u);
+		AFSService.closeSession();
 		return u;
 	}
 
@@ -64,6 +67,7 @@ public class WishlistController
 		else u.getWishlist().remove(this.movieService.get(movie));
 
 		this.userService.update(u);
+		AFSService.closeSession();
 	}
 
 }

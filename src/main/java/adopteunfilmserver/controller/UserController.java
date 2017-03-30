@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.MovieService;
 import adopteunfilmserver.controller.service.UserService;
 import adopteunfilmserver.model.User;
@@ -30,14 +31,18 @@ public class UserController
 	public @ResponseBody int add(@PathVariable String name)
 	{
 		this.userService.add(new User(name));
-		return this.userService.get(name).getId();
+		int id = this.userService.get(name).getId();
+		AFSService.closeSession();
+		return id;
 	}
 
 	@RequestMapping(value = "/user/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<User> delete(@PathVariable int id)
 	{
 		this.userService.delete(id);
-		return this.userService.list();
+		List<User> users = this.userService.list();
+		AFSService.closeSession();
+		return users;
 	}
 
 	@RequestMapping(value = "/user/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -68,6 +73,7 @@ public class UserController
 		User user = this.userService.get(id);
 		user.setPseudo(pseudo);
 		this.userService.update(user);
+		AFSService.closeSession();
 	}
 
 }

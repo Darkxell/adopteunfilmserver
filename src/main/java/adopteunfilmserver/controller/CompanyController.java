@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.CompanyService;
 import adopteunfilmserver.model.Company;
 
@@ -23,14 +24,18 @@ public class CompanyController
 	public @ResponseBody List<Company> add(@PathVariable String name, @PathVariable String country)
 	{
 		this.companyService.add(new Company(name, country));
-		return this.companyService.list();
+		List<Company> companies = this.companyService.list();
+		AFSService.closeSession();
+		return companies;
 	}
 
 	@RequestMapping(value = "/company/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Company> delete(@PathVariable int id)
 	{
 		this.companyService.delete(id);
-		return this.companyService.list();
+		List<Company> companies = this.companyService.list();
+		AFSService.closeSession();
+		return companies;
 	}
 
 	@RequestMapping(value = "/company/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -51,6 +56,7 @@ public class CompanyController
 		Company company = this.companyService.get(id);
 		company.setCountry(country);
 		this.companyService.update(company);
+		AFSService.closeSession();
 		return company;
 	}
 
@@ -60,6 +66,7 @@ public class CompanyController
 		Company company = this.companyService.get(id);
 		company.setName(name);
 		this.companyService.update(company);
+		AFSService.closeSession();
 		return company;
 	}
 

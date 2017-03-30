@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import adopteunfilmserver.controller.service.AFSService;
 import adopteunfilmserver.controller.service.LanguageService;
 import adopteunfilmserver.model.Language;
 
@@ -23,14 +24,18 @@ public class LanguageController
 	public @ResponseBody List<Language> add(@PathVariable String name)
 	{
 		this.languageService.add(new Language(name));
-		return this.languageService.list();
+		List<Language> languages = this.languageService.list();
+		AFSService.closeSession();
+		return languages;
 	}
 
 	@RequestMapping(value = "/language/delete/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Language> delete(@PathVariable int id)
 	{
 		this.languageService.delete(id);
-		return this.languageService.list();
+		List<Language> languages = this.languageService.list();
+		AFSService.closeSession();
+		return languages;
 	}
 
 	@RequestMapping(value = "/language/get/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -51,6 +56,7 @@ public class LanguageController
 		Language language = this.languageService.get(id);
 		language.setName(name);
 		this.languageService.update(language);
+		AFSService.closeSession();
 		return language;
 	}
 
