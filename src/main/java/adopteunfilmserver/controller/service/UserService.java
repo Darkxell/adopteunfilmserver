@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import adopteunfilmserver.model.Movie;
@@ -23,13 +24,14 @@ public class UserService extends AFSService<User>
 		super(User.class);
 	}
 
-	// @Async
-	public void calculateNextRecommendation(User u)
+	@Async
+	public void calculateNextRecommendation(int id)
 	{
+		User u = this.get(id);
 		List<Movie> recommended = new ArrayList<Movie>();
 		for (User follow : u.getFollowing())
 			recommended.addAll(follow.getRecommended());
-
+		
 		recommended.removeAll(this.ratingService.getRatedMovies(u));
 		recommended.remove(u.getCurrentSuggestion());
 		if (!recommended.isEmpty()) u.setNextSuggestion(recommended.get(0));
@@ -38,7 +40,14 @@ public class UserService extends AFSService<User>
 			RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 			u.setNextSuggestion(rm.getOutput());
 		}
-		this.update(u);
+		try
+		{
+			this.update(u);
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		AFSService.closeSession();
 	}
 
 	public User get(String name)
