@@ -1,11 +1,13 @@
 package adopteunfilmserver.controller.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import adopteunfilmserver.model.Movie;
 import adopteunfilmserver.model.User;
 import adopteunfilmserver.recommendationalgorithm.RecommendationMaker;
 
@@ -28,9 +30,17 @@ public class UserService extends AFSService<User>
 		Hibernate.initialize(u.getNextSuggestion());
 		u.setCurrentSuggestion(u.getNextSuggestion());
 
-		// TODO manage recommendations
-		RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
-		u.setNextSuggestion(rm.getOutput());
+		List<Movie> recommended = new ArrayList<Movie>();
+		for (User follow : u.getFollowing())
+			recommended.addAll(follow.getRecommended());
+
+		recommended.removeAll(this.ratingService.getRatedMovies(u));
+		if (!recommended.isEmpty()) u.setNextSuggestion(recommended.get(0));
+		else
+		{
+			RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
+			u.setNextSuggestion(rm.getOutput());
+		}
 		this.update(u); // TODO Make Asynchronous
 	}
 
