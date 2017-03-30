@@ -33,6 +33,7 @@ public class AFSService<T>
 
 		session.save(object);
 		session.getTransaction().commit();
+		if (session.isOpen()) session.close();
 
 		return object;
 	}
@@ -58,6 +59,7 @@ public class AFSService<T>
 
 		session.delete(object);
 		session.getTransaction().commit();
+		if (session.isOpen()) session.close();
 
 		return object;
 	}
@@ -66,6 +68,7 @@ public class AFSService<T>
 	{
 		@SuppressWarnings("unchecked")
 		List<T> list = this.session().createQuery("from " + this.oClass.getName() + " where id='" + id + "'").list();
+		if (this.session().isOpen()) this.session().close();
 		if (list.isEmpty()) return null;
 		return list.get(0);
 	}
@@ -73,7 +76,9 @@ public class AFSService<T>
 	@SuppressWarnings("unchecked")
 	public List<T> list()
 	{
-		return this.session().createQuery("from " + this.oClass.getName()).list();
+		List<T> list = this.session().createQuery("from " + this.oClass.getName()).list();
+		if (this.session().isOpen()) this.session().close();
+		return list;
 	}
 
 	/** Provides easy access to the session. */
@@ -81,7 +86,7 @@ public class AFSService<T>
 	{
 		if (sf == null) createSessionFactory();
 		Session s = sf.getCurrentSession();
-
+		if (!s.isOpen()) s = sf.openSession();
 		if (!s.getTransaction().isActive()) s.beginTransaction();
 		return s;
 	}
@@ -92,6 +97,7 @@ public class AFSService<T>
 
 		session.update(object);
 		session.getTransaction().commit();
+		if (session.isOpen()) session.close();
 
 		return object;
 	}

@@ -38,6 +38,7 @@ public class UserService extends AFSService<User>
 	{
 		@SuppressWarnings("unchecked")
 		List<User> list = this.session().createQuery("from User where pseudo='" + name + "'").list();
+		if (this.session().isOpen()) this.session().close();
 		if (list.isEmpty()) return null;
 		return list.get(0);
 	}
@@ -46,6 +47,7 @@ public class UserService extends AFSService<User>
 	{
 		@SuppressWarnings("unchecked")
 		List<User> list = this.session().createQuery("from User where pseudo like '%" + param + "%'").setMaxResults(50).list();
+		if (this.session().isOpen()) this.session().close();
 		return list;
 	}
 
