@@ -19,8 +19,11 @@ public class RecommendationMaker {
 			return;
 		}
 
-		// A list of ~50 films the user haven't rated yet.
-		List<Movie> randoms = movies.random(50);
+		// A list of ~1000 films the user haven't rated yet.
+		List<Movie> randoms = movies.random(1000);
+		for (Rating r : uservotes)
+			randoms.remove(r.getMovie());
+		
 		Movie best = randoms.get(0);
 		long bestmoviescore = 0;
 
