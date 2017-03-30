@@ -2,6 +2,7 @@ package adopteunfilmserver.controller.service;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,9 +25,9 @@ public class UserService extends AFSService<User>
 	// @Async
 	public void calculateNextRecommendation(User u)
 	{
-		if (u.getNextSuggestion() == null) u.setNextSuggestion(this.movieService.random());
+		Hibernate.initialize(u.getNextSuggestion());
 		u.setCurrentSuggestion(u.getNextSuggestion());
-		
+
 		// TODO manage recommendations
 		RecommendationMaker rm = new RecommendationMaker(u, this.ratingService, this.movieService);
 		u.setNextSuggestion(rm.getOutput());

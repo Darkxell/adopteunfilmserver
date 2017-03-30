@@ -2,6 +2,7 @@ package adopteunfilmserver.controller;
 
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,9 +24,9 @@ public class MovieController
 	@Autowired
 	private MovieService movieService;
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private RatingService ratingService;
+	@Autowired
+	private UserService userService;
 
 	@RequestMapping(value = "/movie/add/{name}/{type}/{year}/{running}", method = RequestMethod.GET, headers = "Accept=application/json")
 	public @ResponseBody List<Movie> add(@PathVariable String name, @PathVariable int year, @PathVariable String type, @PathVariable double running)
@@ -63,8 +64,14 @@ public class MovieController
 	public @ResponseBody Movie recommend(@PathVariable int user)
 	{
 		User u = this.userService.get(user);
-		if (u.getNextSuggestion() == null || u.getNextSuggestion() == null) this.userService.calculateNextRecommendation(u);
-		u.getCurrentSuggestion().getId(); // To load suggestion (it's lazy fetched)
+		Hibernate.initialize(u.getNextSuggestion());
+		Hibernate.initialize(u.getCurrentSuggestion());
+		if (u.getCurrentSuggestion() == null||u.getNextSuggestion() == null)
+		{
+			if (u.getCurrentSuggestion() == null) u.setCurrentSuggestion(this.movieService.random());
+			if (u.getNextSuggestion() == null) u.setNextSuggestion(this.movieService.random());
+			this.userService.update(u);
+		}
 		return u.getCurrentSuggestion();
 	}
 
@@ -80,7 +87,6 @@ public class MovieController
 		User u = this.userService.get(user);
 		this.ratingService.add(new Rating(u, u.getCurrentSuggestion(), note));
 		this.userService.calculateNextRecommendation(u);
-		u.getCurrentSuggestion().getId(); // To load suggestion (it's lazy fetched)
 		return u.getCurrentSuggestion();
 	}
 
